@@ -1,5 +1,14 @@
 # Caminho do OH MY ZSH
 export ZSH="$HOME/.oh-my-zsh"
+eval "$(zoxide init zsh)"
+function yy() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ]; then
+    cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
+}
 
 ZSH_THEME=adben
 #ZSH_THEME_RANDOM_QUIEt=true
@@ -39,6 +48,62 @@ alias mt="vim ~/Documentos/MEUTUTOR/AGENTE_HIBRIDO_BACKEND"
 alias tx="vim ~/.tmux.conf.local"
 alias t="tmux"
 
+: '============================================================================================== 👁️⃤  
+ ┌─────────────────────────────────────────────────────────────────────────────────┐
+│ (う-´)▄︻デ═══一* RADICAL TMUX by (BRAGA USS) % se isso se move compile isso!!!   │
+│  _.~"~._.~"~._.~"~._.~"~.__.~"~._.~"~._.~"~._.~"~.__.~"~._.~"~._..~"~._.~"~.~"~   │
+ └─────────────────────────────────────────────────────────────────────────────────┘
+
+ ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▓▓⚡D O C U M E N T A Ç Ã O   T É C N I C A   D O   M Ó D U L O   t m u x  ⚡▓▓
+║ ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ ║
+║                                                                             ║ 
+║  ⎧ Versão: 0.1 – GAMEFICAÇÃO DE HACKING PARA HACKEAR COM ESTILO             ║
+║                          SEUS COODA FOFO DO CARALHO                         ║
+═══════════════════════════════════════════════════════════════════════════════
+║  >_ STATUS DO DESENVOLVIMENTO: [▓                             ] 0.1%        ║ 
+═══════════════════════════════════════════════════════════════════════════════
+║                                                                             ║ 
+║  🂾 CONVOCO TODOS OS BRUXOS DIGITAIS A CONTRIBUIR COM O RADICAL O.S STYLE 🂱  ║
+║                                                                             ║
+║    ⋆˖⁺‧₊☽◯☾₊‧⁺˖⋆ ⋆˖⁺‧₊☽◯☾₊‧⁺˖⋆ ⋆˖⁺‧₊☽◯☾₊‧⁺˖⋆ ⋆˖⁺‧₊☽◯☾₊‧⁺˖꧁✮..🔮☽..✮꧂        ║
+║     “código livre, mentes livres – derrube os muros do proprietário”        ║
+║                                                                             ║
+╚═════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  [ HUD - INDEX ]                                                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  1.  VISÃO GERAL DO SISTEMA                                                 │
+│  2.  ARQUITETURA MODULAR                                                    │
+│  3.  DEFINIÇÃO DAS CORES ANSI                                               │
+│  4.  FUNÇÃO _header – CABEÇALHO                                             │
+│  5.  FUNÇÕES DE ARTE ASCII                                                  │
+│  6.  FUNÇÃO _get_sessions – LISTAGEM                                        │
+│  7.  FUNÇÃO _create_new_session – CRIAÇÃO                                   │
+│  8.  FUNÇÃO _main_menu – MENU PRINCIPAL                                     │
+│  9.  FUNÇÃO _action_menu – SUBMENU DE AÇÕES                                 │
+│  10. LÓGICA PRINCIPAL – tmux()                                              │
+│  11. AUTO‑START – DISPARO AUTOMÁTICO                                        │
+│  12. ANÁLISE MATEMÁTICO‑COMPUTACIONAL                                       │
+│  13. CONCLUSÃO E REFERÊNCIAS                                                │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+-----------------------------------------------------------------------------------
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║  [ 1 :: >> VISÃO GERAL DO SISTEMAi << ]                                          ║
+╠══════════════════════════════════════════════════════════════════════════════════╣
+║  • Função Zsh que sobrescreve o comando nativo `tmux`.                           ║
+║  • Oferece interface interativa com cores ANSI e arte ASCII.                     ║
+║  • Suporte dual: fuzzy finder (`fzf`) ou menu numérico fallback.                 ║ 
+║  • Gerencia sessões tmux: criar, anexar, matar, renomear.                        ║ 
+║  • Execução automática em shells interativos (opcional).                         ║
+╠══════════════════════════════════════════════════════════════════════════════════╣
+
+
+=================================================================================================='
+
 tmux() {
   # ── CORES NEON CYBERPUNK ─────────────────────────────────────────
   local R=$'\e[0m'
@@ -51,13 +116,13 @@ tmux() {
   local DIM=$'\e[2m'           # escurecido
   local BLD=$'\e[1m'           # negrito
   local BLK=$'\e[30m'          # preto (para contraste)
-  local ORAN=$'\e[38;5;208m'
+  local ORAN=$'\e[38;5;208m'   # Laranja neon
+
   # ── CABEÇALHO SIMPLES ────────────────────────────────────────────
   _header() {
-    local ORANGE=$'\e[38;5;208m'   # laranja vibrante
-    echo "${BLD}${ORANGE}┌──────────────────────────────────────────────────────────────┐${R}"
-    echo "${BLD}${ORANGE}│ (う-´)▄︻デ═══一* BRAGA USS TERMINAL | if it moves compile it!${R}"
-    echo "${BLD}${ORANGE}└──────────────────────────────────────────────────────────────┘${R}"
+    echo "${BLD}${ORAN}┌──────────────────────────────────────────────────────────────┐${R}"
+    echo "${BLD}${ORAN}│ (う-´)▄︻デ═══一* BRAGA USS TERMINAL | if it moves compile it!${R}"
+    echo "${BLD}${ORAN}└──────────────────────────────────────────────────────────────┘${R}"
     echo ""
   }
 
@@ -142,6 +207,7 @@ tmux() {
       
       local menu_items="$new_opt"
       if [[ -n "$sessions" ]]; then
+        header="$(_small_art)"
         menu_items=$(printf "%s\n%s" "$new_opt" "$sessions")
       fi
       
@@ -161,12 +227,22 @@ tmux() {
         echo "$choice"
       fi
     else
-      # Menu numérico: mostra arte pequena apenas quando não há sessões
-      if [[ -z "$sessions" ]]; then
-        _small_art
+      # (-z é uma função que verifica se a varialvel está vazia) se varivavel sessions está vazia
+      if [[ -z "$sessions" ]]; then # então
+        _small_art # executa a função de desenhar art ASCII
       fi
-      echo "${RED}0) ${MGT}INICIAR NOVA SESSÃO${R}"
+
+      # echo para escrever no terminal
+      echo "${RED}0) ${MGT}INICIAR NOVA SESSÃO${R}" 
+      # variaveis que pinta o texto com cor ANSI
+      # ${RED} colori o 0) de vermelho
+      # ${MGT} colori o INICIAR NOVA SESSÃO de magenta rosa
+      # ${R} volta para cor padrão
+
+      # local cria uma variavel apenas dentro do contexto
       local i=1
+
+      
       while read -r s; do
         [[ -n "$s" ]] && echo "${CYN}$i) ${GRN}$s${R}" && ((i++))
       done <<< "$sessions"
@@ -212,7 +288,7 @@ tmux() {
 
       local sessions=$(_get_sessions)
       local choice=$(_main_menu "$sessions")
-      _art  # exibe a arte grande após o menu principal
+      #_art  # exibe a arte grande após o menu principal
 
       if [[ -z "$choice" ]]; then
         echo "${DIM}Abortado pelo usuário.${R}"
