@@ -352,16 +352,25 @@ alias v="vim ~/.vimrc"
 alias mt="vim ~/Documentos/MEUTUTOR/AGENTE_HIBRIDO_BACKEND"
 alias tx="vim ~/.tmux.conf.local"
 alias t="tmux"
-alias ls="yazi"
+alias ly="yazi"
 alias yz="cd ~/.config/yazi && vim ."
 alias h="n-history"
 alias oz="cd ~/.config/yazi && opencode"
 alias D="cd ~/Downloads"
 alias B="pavucontrol"
 alias vb="sudo modprobe -r kvm_amd"
+alias monitorar="sudo tcpdump -i any 'tcp[tcpflags] & tcp-syn != 0'"
+alias vt="sudo modprobe -r kvm_amd"
+
+hk() {
+  while true; do
+    python3 ~/gentoo.py
+    echo "(う-´)▄︻デ═══一*"
+    sleep 2
+  done
+}
 
 cat << "EOF"
-
          Seja bem vindo cowboy do cyber espaço
 (う-´)▄︻デ═══一*+++++++++++++++++++++++++++++
 ___. 
