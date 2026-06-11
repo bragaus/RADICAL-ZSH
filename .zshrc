@@ -2,6 +2,10 @@
 export ZSH="$HOME/.oh-my-zsh"
 eval "$(zoxide init zsh)"
 
+if [[ ":$PATH:" != *":$HOME/development/flutter/bin:"* ]]; then
+	export PATH="$HOME/development/flutter/bin:$PATH"
+fi
+
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	command yazi "$@" --cwd-file="$tmp"
@@ -338,9 +342,11 @@ if [[ -z "$TMUX" && -z "$NO_TMUX" && -n "$PS1" ]]; then
   tmux
 fi
 
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$ANDROID_HOME/platform-tools:$PATH
+export PATH=$ANDROID_HOME/emulator:$PATH
 
-alias s="ssh -v root@65.21.51.203"
-alias pa="cd ~/Documentos/Plano-Artistico/planoWeb3"
+alias pa="cd ~/Documentos/diversos/planoWeb3"
 alias z="vim ~/.zshrc"
 alias a="cd ~/Documentos/ASSINEAI"
 alias us="setxkbmap us"
@@ -355,12 +361,50 @@ alias t="tmux"
 alias ly="yazi"
 alias yz="cd ~/.config/yazi && vim ."
 alias h="n-history"
-alias oz="cd ~/.config/yazi && opencode"
 alias D="cd ~/Downloads"
 alias B="pavucontrol"
 alias vb="sudo modprobe -r kvm_amd"
 alias monitorar="sudo tcpdump -i any 'tcp[tcpflags] & tcp-syn != 0'"
 alias vt="sudo modprobe -r kvm_amd"
+alias vs="cd ~/Documentos/diversos/vibe-studying-backend/ && vim ."
+alias pi="cd ~/Documentos/school-camera-alert && y"
+alias atualizar="git pull --recurse-submodules && git submodule update --init --recursive"
+alias c="claude --dangerously-skip-permissions"
+
+
+allgit() {
+    echo "=== ROOT REPO ==="
+
+    branch=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null \
+        | sed 's@^refs/remotes/origin/@@')
+
+    if [ -n "$branch" ]; then
+        git checkout "$branch"
+        git pull origin "$branch"
+    fi
+
+    for d in */.git; do
+        repo="${d%/.git}"
+
+        echo ""
+        echo "=== $repo ==="
+
+        (
+            cd "$repo" || exit
+
+            branch=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null \
+                | sed 's@^refs/remotes/origin/@@')
+
+            if [ -z "$branch" ]; then
+                echo "⚠ Não foi possível detectar branch principal"
+                exit
+            fi
+
+            git checkout "$branch"
+            git pull origin "$branch"
+        )
+    done
+}
 
 hk() {
   while true; do
@@ -384,5 +428,24 @@ ___.
 
 EOF
 
-# opencode
-export PATH=/home/bragaus/.opencode/bin:$PATH
+# Prefer the user-managed Android SDK over distro packages to avoid adb mismatches.
+if [ -d "$HOME/Android/Sdk" ]; then
+  export ANDROID_SDK_ROOT="$HOME/Android/Sdk"
+  export ANDROID_HOME="$ANDROID_SDK_ROOT"
+
+  case ":$PATH:" in
+    *":$ANDROID_SDK_ROOT/platform-tools:"*) ;;
+    *) PATH="$ANDROID_SDK_ROOT/platform-tools:$PATH" ;;
+  esac
+  case ":$PATH:" in
+    *":$ANDROID_SDK_ROOT/emulator:"*) ;;
+    *) PATH="$ANDROID_SDK_ROOT/emulator:$PATH" ;;
+  esac
+  case ":$PATH:" in
+    *":$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:"*) ;;
+    *) PATH="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH" ;;
+  esac
+
+  export PATH
+fi
+export PATH="$HOME/.npm-global/bin:$PATH"
