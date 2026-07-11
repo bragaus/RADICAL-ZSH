@@ -8,10 +8,6 @@
 >
 > — *Prof. Dr. BRAGA USS, Cathedratico*
 
-![Gravura panoramica da machina em pleno funccionamento](zsh.png)
-*GRAVURA PANORAMICA — a machina em pleno funccionamento: quatro
-quadrantes, duas philosophias de cowsay e um pinguim ceremonial.*
-
 **ADVERTENCIA AO LEITOR:** a ordem das proposições não é arbitraria.
 Tal como num tractado de geometria, cada lemma depende dos que o
 precedem; que ninguem ouse permutar as secções do `.zshrc` sem antes
