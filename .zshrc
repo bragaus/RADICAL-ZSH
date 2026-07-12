@@ -135,19 +135,19 @@ function y() {
 tmux() {
   # Definições chromaticas: as constantes ANSI de que se tingem os menus.
   local R=$'\e[0m'
-  local RED=$'\e[38;5;196m'    # vermelho sangue
-  local GRN=$'\e[38;5;46m'     # verde matrix
-  local YLW=$'\e[38;5;226m'    # amarelo choque
-  local CYN=$'\e[38;5;51m'     # ciano elétrico
-  local MGT=$'\e[38;5;201m'    # magenta psicodélico
-  local WHT=$'\e[97m'          # branco puro
-  local DIM=$'\e[2m'           # escurecido
-  local BLD=$'\e[1m'           # negrito
-  local BLK=$'\e[30m'          # preto (para contraste)
-  local ORAN=$'\e[38;5;208m'   # Laranja neon
+  local RED=$'\e[38;5;196m'    # rubro de sangue
+  local GRN=$'\e[38;5;46m'     # verde da matriz
+  local YLW=$'\e[38;5;226m'    # amarello de choque
+  local CYN=$'\e[38;5;51m'     # cyano electrico
+  local MGT=$'\e[38;5;201m'    # magenta psychodelico
+  local WHT=$'\e[97m'          # branco puríssimo
+  local DIM=$'\e[2m'           # esbatido
+  local BLD=$'\e[1m'           # negro carregado
+  local BLK=$'\e[30m'          # preto (para o contraste)
+  local ORAN=$'\e[38;5;208m'   # laranja de neon
 
   # Lemma II.1 — do frontispicio que encima cada tela.
-  # ── HEADER ────────────────────────────────────────────
+  # ── FRONTISPICIO ────────────────────────────────────────────
   _header() {
     echo "${BLD}${ORAN}┌──────────────────────────────────────────────────────────────┐${R}"
     echo "${BLD}${ORAN}│ (う-´)▄︻デ═══一* BRAGA USS TERMINAL | if it moves compile it!${R}"
@@ -186,7 +186,7 @@ tmux() {
 
   # Lemma II.3 — da gravura menor, reservada á hypothese do conjuncto
   # vazio de sessões.
-  # ── ARTE ASCII PEQUENA (APENAS QUANDO NÃO HÁ SESSÕES) ────────────
+  # ── GRAVURA MENOR (SÓ NA VACUIDADE DE SESSÕES) ────────────
   _small_art() {
     echo "${MGT}⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⡔⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀${R}"
     echo "${MGT}⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡠⢚⣉⣠⡽⠂⠀⠀⠀⠀⡰⢋⡼⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⢴⡆⠀⠀${R}"
@@ -198,14 +198,14 @@ tmux() {
   }
 
   # Lemma II.4 — da enumeração das sessões existentes, uma por linha.
-  # ── LISTA SESSÕES ───────────────────────────────────────────────
+  # ── ENUMERAÇÃO DAS SESSÕES ───────────────────────────────────────────────
   _get_sessions() {
     command tmux ls 2>/dev/null | cut -d: -f1
   }
 
   # Lemma II.5 — da creação de nova sessão, com prova de unicidade do
   # nome: repete-se a interrogação emquanto houver collisão.
-  # ── CRIAR NOVA SESSÃO (COM VALIDAÇÃO DE NOME DUPLICADO) ─────────
+  # ── CREAÇÃO DE NOVA SESSÃO (COM PROVA DE UNICIDADE) ─────────
   _create_new_session() {
     local name=""
     while true; do
@@ -230,7 +230,7 @@ tmux() {
 
   # Lemma II.6 — do menu principal. Havendo o instrumento fzf, usa-se-o;
   # na sua falta, recorre-se ao venerando menu numerico.
-  # ── MENU PRINCIPAL COM FZF OU NUMÉRICO ──────────────────────────
+  # ── MENU PRINCIPAL (FZF OU NUMERICO) ──────────────────────────
   _main_menu() {
     local sessions="$1"
     local new_opt="[+] INICIAR NOVA SESSÃO"
@@ -298,7 +298,7 @@ tmux() {
 
   # Lemma II.7 — do submenu de acções sobre uma sessão eleita:
   # annexar, exterminar, rebaptizar, ou retroceder.
-  # ── MENU DE AÇÕES COM FZF OU NUMÉRICO ───────────────────────────
+  # ── MENU DE ACÇÕES (FZF OU NUMERICO) ───────────────────────────
   _action_menu() {
     if command -v fzf >/dev/null 2>&1; then
       printf "attach\nkill\nrename\nback\n" | fzf \
@@ -323,7 +323,7 @@ tmux() {
   # Demonstração do Theorema II — a logica principal. Achando-se o
   # observador FÓRA de qualquer sessão ($TMUX vazio), abre-se o menu;
   # achando-se DENTRO, delega-se humildemente ao tmux verdadeiro.
-  # ── LÓGICA PRINCIPAL ────────────────────────────────────────────
+  # ── DEMONSTRAÇÃO PRINCIPAL ────────────────────────────────────────────
   if [[ -z "$TMUX" ]]; then
 
     while true; do
@@ -332,7 +332,7 @@ tmux() {
 
       local sessions=$(_get_sessions)
       local choice=$(_main_menu "$sessions")
-      #_art  # exibe a arte grande após o menu principal
+      #_art  # exhibe a gravura maior após o menu principal
 
       if [[ -z "$choice" ]]; then
         echo "${DIM}Abortado pelo usuário.${R}"
@@ -340,7 +340,7 @@ tmux() {
       fi
 
       if [[ "$choice" == "NEW" ]]; then
-        _art  # exibe a arte grande antes do prompt de criação
+        _art  # exhibe a gravura maior antes da creação
         _create_new_session
         return
       fi
@@ -354,7 +354,7 @@ tmux() {
         echo ""
 
         local action=$(_action_menu)
-        #_art  # exibe a arte grande após o menu de ações
+        #_art  # exhibe a gravura maior após o menu de acções
 
         case "$action" in
           attach)
@@ -460,7 +460,7 @@ hk() {
 #   tmux do Theorema II. Esta proposição EXIGE que o § III a preceda.
 # ───────────────────────────────────────────────────────────────────────────────
 
-# Auto-start (opcional)
+# Do disparo automatico (facultativo)
 if [[ -z "$TMUX" && -z "$NO_TMUX" && -n "$PS1" ]]; then
   tmux
 fi
