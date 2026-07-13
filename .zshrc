@@ -548,7 +548,8 @@ alias c="claude --dangerously-skip-permissions"
 alias delta="cd ~/Documentos/SOFTWARE_HOUSE/delta-app && y"
 alias sfh="cd ~/Documentos/SOFTWARE_HOUSE/ && y"
 alias neofetch="~/.local/bin/screenfetch"
-
+alias disco="sudo qdirstat /"
+alias cel="~/bin/meu-celular"
 
 # ───────────────────────────────────────────────────────────────────────────────
 # § VII. EPILOGO — DA SAUDAÇÃO AO VIAJANTE
@@ -566,11 +567,7 @@ ___.
 | \_\ \  | \// __ \_/ /_/  > __ \    |  |  /\___ \
 |___  /__|  (____  /\___  (____  /   |____//____  >
      \/           \//_____/     \/               \/
-
-
-
 EOF
-
 
 # ═══════════════════════════════════════════════════════════════════════════════
 #
